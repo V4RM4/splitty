@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    skip_before_action :require_login, only: [:new, :create]
 
     def show
     end
@@ -18,12 +19,12 @@ class UsersController < ApplicationController
         else
             flash[:error] = "Error- please try to create an account again."
             redirect_to new_user_path
-        end
+        end 
     end
   
     private 
     def user_params
-        params.require(:user).permit(:email, :password)
+        params.require(:user).permit(:firstname, :lastname, :email, :username, :password)
     end
 
 end
