@@ -1,18 +1,16 @@
 class SessionsController < ApplicationController
 
-    def home
+    def new
     end
 
     def create
-        @user = User.find_by(username: params[:username])
-
-        if !!@user && @user.authenticate(params[:password])
+        session_params = params.permit(:email, :password)
+        @user = User.find_by(email: session_params[:email])
+        if @user && @user.authenticate(session_params[:password])
             session[:user_id] = @user.id
-            redirect_to user_path
-       else
-           message = "Something went wrong! Please check your username and password and try again!"
-           redirect_to login_path, notice: message 
-       end
-    end
-
+            redirect_to @user
+        else
+            flash[:notice] = "Login is invalid!"
+            redirect_to new_session_path
+        end
 end
