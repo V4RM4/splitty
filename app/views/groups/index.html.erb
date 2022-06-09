@@ -1,0 +1,15 @@
+<%= link_to "Sign out", signout_path, method: :delete %>
+<p style="color: green"><%= notice %></p>
+
+<h1>My Groups</h1>
+
+<div id="groups">
+  <% @groups.each do |group| %>
+    <%# <%= render group %>
+    <p>
+      <%= link_to "#{group.group_name}", group %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New group", new_group_path %>
