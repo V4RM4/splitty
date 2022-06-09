@@ -32,8 +32,11 @@
   </div>
 
   <div>
-    <%= form.label :expense_group_id, style: "display: block" %>
-    <%= form.text_field :expense_group_id %>
+    <%= form.hidden_field :expense_user, value: session[:username] %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :expense_group_id %>
   </div>
 
   <div>

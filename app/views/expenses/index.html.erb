@@ -1,14 +1,19 @@
+<%= link_to "Sign out", signout_path, method: :delete %>
 <p style="color: green"><%= notice %></p>
 
 <h1>Expenses</h1>
 
 <div id="expenses">
-  <% @expenses.each do |expense| %>
-    <%= render expense %>
-    <p>
-      <%= link_to "Show this expense", expense %>
-    </p>
-  <% end %>
+  <table>
+  <tr>
+    <% @expenses.each do |expense| %>
+      <td><%= link_to "#{expense.expense_name}", expense %></td>
+      <td>    <%= expense.expense_amount %>   </td>
+      <td><%= expense.expense_datetime.to_date   %>   </td>
+    <% end %>
+  </tr>
+  </table>
 </div>
 
-<%= link_to "New expense", new_expense_path %>
+<%= link_to "New expense", new_expense_path %><br><br>
+<%= link_to "Home", home_path %>

@@ -19,6 +19,7 @@ class ExpensesTest < ApplicationSystemTestCase
     fill_in "Expense group", with: @expense.expense_group_id
     fill_in "Expense name", with: @expense.expense_name
     fill_in "Expense notes", with: @expense.expense_notes
+    fill_in "Expense user", with: @expense.expense_user
     click_on "Create Expense"
 
     assert_text "Expense was successfully created"
@@ -34,6 +35,7 @@ class ExpensesTest < ApplicationSystemTestCase
     fill_in "Expense group", with: @expense.expense_group_id
     fill_in "Expense name", with: @expense.expense_name
     fill_in "Expense notes", with: @expense.expense_notes
+    fill_in "Expense user", with: @expense.expense_user
     click_on "Update Expense"
 
     assert_text "Expense was successfully updated"

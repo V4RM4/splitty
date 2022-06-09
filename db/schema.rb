@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_09_065404) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_09_094641) do
+  create_table "expenses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "expense_name"
+    t.decimal "expense_amount", precision: 10
+    t.datetime "expense_datetime"
+    t.text "expense_notes"
+    t.string "expense_user"
+    t.string "expense_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "group_details", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "group_id"
+    t.string "group_name"
+    t.string "user_id"
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "group_name"
     t.string "group_type"
@@ -18,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_065404) do
     t.string "group_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group_members"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

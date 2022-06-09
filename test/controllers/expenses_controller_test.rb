@@ -17,7 +17,7 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create expense" do
     assert_difference("Expense.count") do
-      post expenses_url, params: { expense: { expense_amount: @expense.expense_amount, expense_datetime: @expense.expense_datetime, expense_group_id: @expense.expense_group_id, expense_name: @expense.expense_name, expense_notes: @expense.expense_notes } }
+      post expenses_url, params: { expense: { expense_amount: @expense.expense_amount, expense_datetime: @expense.expense_datetime, expense_group_id: @expense.expense_group_id, expense_name: @expense.expense_name, expense_notes: @expense.expense_notes, expense_user: @expense.expense_user } }
     end
 
     assert_redirected_to expense_url(Expense.last)
@@ -34,7 +34,7 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update expense" do
-    patch expense_url(@expense), params: { expense: { expense_amount: @expense.expense_amount, expense_datetime: @expense.expense_datetime, expense_group_id: @expense.expense_group_id, expense_name: @expense.expense_name, expense_notes: @expense.expense_notes } }
+    patch expense_url(@expense), params: { expense: { expense_amount: @expense.expense_amount, expense_datetime: @expense.expense_datetime, expense_group_id: @expense.expense_group_id, expense_name: @expense.expense_name, expense_notes: @expense.expense_notes, expense_user: @expense.expense_user } }
     assert_redirected_to expense_url(@expense)
   end
 

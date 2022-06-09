@@ -5,6 +5,7 @@ class CreateExpenses < ActiveRecord::Migration[7.0]
       t.decimal :expense_amount
       t.datetime :expense_datetime
       t.text :expense_notes
+      t.string :expense_user
       t.string :expense_group_id
 
       t.timestamps

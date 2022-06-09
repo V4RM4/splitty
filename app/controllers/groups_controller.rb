@@ -13,6 +13,7 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
+    @group_detail = GroupDetail.new
   end
 
   # GET /groups/1/edit
@@ -25,6 +26,12 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
+        members_list = @group.group_members.strip.split(",")
+        members_list << session[:user_username]
+        members_list.each do |member|
+          @group_detail = GroupDetail.new(group_id: @group.id, group_name: @group.group_name, username: member.strip)
+          @group_detail.save!
+        end
         format.html { redirect_to group_url(@group), notice: "Group was successfully created." }
         format.json { render :show, status: :created, location: @group }
       else
@@ -65,6 +72,6 @@ class GroupsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def group_params
-      params.require(:group).permit(:group_name, :group_type, :group_owner, :group_status)
+      params.require(:group).permit(:group_name, :group_type, :group_owner, :group_status, :group_members)
     end
 end

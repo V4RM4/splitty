@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :groups
 
   get "/signout", to: "sessions#destroy"
-  get "/home", to: "groups#index"
+  get "/home", to: "users#index"
+
+  get "/expense", to: "expenses#index"
+  get "/group", to: "groups#index"
 
 end
