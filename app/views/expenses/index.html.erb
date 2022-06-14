@@ -12,13 +12,16 @@
     <th>Category</th>
     <th>Amount</th>
     <th>Date</th>
+    <th>Group</th>
     <tr>
     <% @expenses.each do |expense| %>
       <% if expense.expense_user == session[:user_username] %>
         <td><%= link_to "#{expense.expense_name}", expense %></td>
         <td><%= expense.expense_category %></td>
         <td>&#x20B9;<%= expense.expense_amount %></td>
-        <td><%= expense.expense_datetime.to_date   %></td>
+        <td><%= expense.expense_datetime.to_date %></td>
+        <% gpid = expense.expense_group_id %>
+        <td><%= Group.find(gpid).group_name if gpid != "" %></td>
         <% if ((expense.expense_datetime.to_date.month.to_i == Time.now.month.to_i) && (expense.expense_datetime.to_date.year.to_i == Time.now.year.to_i)) %>
           <% total = total + expense.expense_amount.to_f %>
           <% category_count[expense.expense_category] += 1 %>

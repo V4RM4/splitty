@@ -1,23 +1,15 @@
 <div id="<%= dom_id group %>">
-  <p>
-    <strong>Group name:</strong>
-    <%= group.group_name %>
-  </p>
+  <h1><%= group.group_name %></h1>
+  <%= group.group_type %>
 
-  <p>
-    <strong>Group type:</strong>
-    <%= group.group_type %>
-  </p>
-
-  <p>
+  <%# <p>
     <strong>Created by:</strong>
     <%= group.group_owner %>
-  </p>
+  <%# </p> %>
 
   <p>
-    <strong>Members:</strong>
-    <%= group.group_members %>
-  </p>
+    Members <br><%= group.group_members %>
+  </p>  
 
   <%# <p>
     <strong>Group status:</strong>

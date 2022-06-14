@@ -1,0 +1,66 @@
+<%= form_with(model: expense) do |form| %>
+  <% if expense.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+
+      <ul>
+        <% expense.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :expense_name, style: "display: block" %>
+    <%= form.text_field :expense_name %>
+  </div>
+
+  <div>
+    <%= form.label :expense_category, style: "display: block" %>
+    <%= form.select :expense_category, {
+        "" => ["Select a category"],
+        "Entertainment" => [ ["Games"], ["Movies"], ["Music"], ["Sports"], ["Other"] ],
+        "Food & Drink" => [ ["Dining Out"], ["Groceries"], ["Liquor"], ["Delivery"], ["Other"] ],
+        "Home" => [ ["Electronics"], ["Furniture"], ["Household Supplies"], ["Maintenance"], ["Mortage"], ["Pets"], ["Rent"], ["Services"], ["Other"] ],
+        "Life" => [ ["Childcare"], ["Clothing"], ["Education"], ["Gifts"], ["Insurance"], ["Medical expense"], ["Taxes"], ["Other"] ],
+        "Transportation" => [ ["Bicycle"], ["Bus/Train"], ["Car"], ["Gas/Fuel"], ["Hotel"], ["Parking"], ["Plane"], ["Taxi"], ["Other"] ],
+        "Utilities" => [ ["Cleaning"], ["Electricity"], ["Heat/Gas"], ["Trash"], ["TV/Phone/Internet"], ["Water"], ["Other"] ],
+        "Others" => [["Other"]]
+      }%>
+  </div>
+
+  <div>
+    <%= form.label :expense_amount, style: "display: block" %>
+    <%= form.text_field :expense_amount %>
+  </div>
+
+  <div>
+    <%= form.label :expense_datetime, style: "display: block" %>
+    <%= form.datetime_field :expense_datetime %>
+  </div>
+
+  <div>
+    <%= form.label "Split among:", style: "display: block" %>
+    <% select_list = [""]%>
+    <% select_list += @group.group_members.split(",")%>
+    <%= form.select :expense_category, select_list, multiple: true %>
+  </div>
+
+  <div>
+    <%= form.label :expense_notes, style: "display: block" %>
+    <%= form.text_area :expense_notes %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :expense_user, value: session[:user_username] %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :expense_group_id, value: @group.id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

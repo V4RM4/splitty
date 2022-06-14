@@ -2,6 +2,49 @@
 
 <%= render @group %>
 
+<%= render "eform", expense: @expense %><br><br>
+
+<h1>Expenses</h1>
+<% total = 0.00 %>
+<% category_count = Hash.new(0) %>
+<% categories = Hash.new(0) %>
+
+<div id="expenses">
+  <table border=1, width=500>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Amount</th>
+    <th>Date</th>
+    <tr>
+    <% @expenses.each do |expense| %>
+      <% if expense.expense_user == session[:user_username] && expense.expense_group_id.to_i == @group.id.to_i %>
+        <td><%= link_to "#{expense.expense_name}", expense %></td>
+        <td><%= expense.expense_category %></td>
+        <td>&#x20B9;<%= expense.expense_amount %></td>
+        <td><%= expense.expense_datetime.to_date %></td>
+        <% if ((expense.expense_datetime.to_date.month.to_i == Time.now.month.to_i) && (expense.expense_datetime.to_date.year.to_i == Time.now.year.to_i)) %>
+          <% total = total + expense.expense_amount.to_f %>
+          <% category_count[expense.expense_category] += 1 %>
+          <% case expense.expense_category %>
+          <% when expense.expense_category %>
+          <% then categories[expense.expense_category] += expense.expense_amount %>
+          <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table><br><br><br>
+
+  <div>
+    <table border=1>
+      <tr><td><h2>&nbsp;Total Expense this month:</h2></td><td colspan=2><h2>&nbsp;&#x20B9;<%= total.round(2) %>&nbsp;</h2></td></tr>
+      <tr><td><h2>&nbsp;Most spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.max) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.max %>&nbsp;</h2></td></tr>
+      <tr><td><h2>&nbsp;Least spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.min) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.min %>&nbsp;</h2></td></tr>
+    </table>
+  </div>
+</div>
+<br><br>
+
 <div>
   <%= link_to "Edit this group", edit_group_path(@group) %> |
   <%= link_to "Back to groups", groups_path %>
