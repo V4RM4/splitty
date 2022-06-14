@@ -14,19 +14,21 @@
     <th>Date</th>
     <tr>
     <% @expenses.each do |expense| %>
-      <td><%= link_to "#{expense.expense_name}", expense %></td>
-      <td><%= expense.expense_category %></td>
-      <td>&#x20B9;<%= expense.expense_amount %></td>
-      <td><%= expense.expense_datetime.to_date   %></td>
-      <% if ((expense.expense_datetime.to_date.month.to_i == Time.now.month.to_i) && (expense.expense_datetime.to_date.year.to_i == Time.now.year.to_i)) %>
-        <% total = total + expense.expense_amount.to_f %>
-        <% category_count[expense.expense_category] += 1 %>
-        <% case expense.expense_category %>
-        <% when expense.expense_category %>
-        <% then categories[expense.expense_category] += expense.expense_amount %>
+      <% if expense.expense_user == session[:user_username] %>
+        <td><%= link_to "#{expense.expense_name}", expense %></td>
+        <td><%= expense.expense_category %></td>
+        <td>&#x20B9;<%= expense.expense_amount %></td>
+        <td><%= expense.expense_datetime.to_date   %></td>
+        <% if ((expense.expense_datetime.to_date.month.to_i == Time.now.month.to_i) && (expense.expense_datetime.to_date.year.to_i == Time.now.year.to_i)) %>
+          <% total = total + expense.expense_amount.to_f %>
+          <% category_count[expense.expense_category] += 1 %>
+          <% case expense.expense_category %>
+          <% when expense.expense_category %>
+          <% then categories[expense.expense_category] += expense.expense_amount %>
+          <% end %>
         <% end %>
+        </tr>
       <% end %>
-      </tr>
     <% end %>
   </table><br><br><br>
 
@@ -38,6 +40,6 @@
     </table>
   </div>
 </div>
-
+<br><br>
 <%= link_to "New expense", new_expense_path %><br><br>
 <%= link_to "Home", home_path %>
