@@ -17,6 +17,20 @@
   </div>
 
   <div>
+    <%= form.label :expense_category, style: "display: block" %>
+    <%= form.select :expense_category, {
+        "" => ["Select a category"],
+        "Entertainment" => [ ["Games"], ["Movies"], ["Music"], ["Sports"], ["Other"] ],
+        "Food & Drink" => [ ["Dining Out"], ["Groceries"], ["Liquor"], ["Delivery"], ["Other"] ],
+        "Home" => [ ["Electronics"], ["Furniture"], ["Household Supplies"], ["Maintenance"], ["Mortage"], ["Pets"], ["Rent"], ["Services"], ["Other"] ],
+        "Life" => [ ["Childcare"], ["Clothing"], ["Education"], ["Gifts"], ["Insurance"], ["Medical expense"], ["Taxes"], ["Other"] ],
+        "Transportation" => [ ["Bicycle"], ["Bus/Train"], ["Car"], ["Gas/Fuel"], ["Hotel"], ["Parking"], ["Plane"], ["Taxi"], ["Other"] ],
+        "Utilities" => [ ["Cleaning"], ["Electricity"], ["Heat/Gas"], ["Trash"], ["TV/Phone/Internet"], ["Water"], ["Other"] ],
+        "Others" => [["Other"]]
+      }%>
+  </div>
+
+  <div>
     <%= form.label :expense_amount, style: "display: block" %>
     <%= form.text_field :expense_amount %>
   </div>

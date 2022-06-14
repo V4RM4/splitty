@@ -7,8 +7,10 @@
   <% @groups.each do |group| %>
     <%# <%= render group %>
     <p>
+    <% if group.group_members.split(",").include? session[:user_username] %>
       <%= link_to "#{group.group_name}", group %>
     </p>
+    <% end %>
   <% end %>
 </div>
 

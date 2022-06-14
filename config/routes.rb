@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get "/expense", to: "expenses#index"
   get "/group", to: "groups#index"
 
+  root "users#index"
+
 end

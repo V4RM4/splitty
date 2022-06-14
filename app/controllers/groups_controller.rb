@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
 
   # GET /groups or /groups.json
   def index
+    @groupdetails = GroupDetail.find_by_sql("SELECT `group_details`.* FROM `group_details` WHERE `group_details`.`username` = '#{session[:user_username]}'")
     @groups = Group.all
   end
 
@@ -22,6 +23,7 @@ class GroupsController < ApplicationController
 
   # POST /groups or /groups.json
   def create
+    group_params["group_members"] << ",#{session[:user_username]}"
     @group = Group.new(group_params)
 
     respond_to do |format|

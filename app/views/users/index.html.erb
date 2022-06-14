@@ -1,5 +1,6 @@
-<h1>User Home</h2>
+<h1>Hello, <%= current_user.firstname %>!</h1>
+@<%= current_user.username %>
 <br><br>
 <%= link_to "My Groups", groups_path %>
 <br><br>
-<%= link_to "My Expenses", expenses_path %>
+<%= link_to "My Expenses", expenses_path %> 
