@@ -41,10 +41,13 @@
   </div>
 
   <div>
-    <%= form.label "Split among:", style: "display: block" %>
-    <% select_list = [""]%>
-    <% select_list += @group.group_members.split(",")%>
-    <%= form.select :expense_category, select_list, multiple: true %>
+      <%= form.label :expense_user, style: "display: block" %>
+      <%= form.text_field :expense_user %>
+  </div>
+
+  <div>
+      <%= form.label :paid_by, style: "display: block" %>
+      <%= form.text_field :paid_by %>
   </div>
 
   <div>
@@ -53,7 +56,7 @@
   </div>
 
   <div>
-    <%= form.hidden_field :expense_user, value: session[:user_username] %>
+    <%# <%= form.hidden_field :expense_user, value: session[:user_username] %>
   </div>
 
   <div>

@@ -11,6 +11,8 @@ class GroupsController < ApplicationController
   def show
     @expense = Expense.new
     @expenses = Expense.all
+    @group_expense = GroupExpense.new
+    @group_expenses = GroupExpense.all
   end
 
   # GET /groups/new

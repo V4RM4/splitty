@@ -15,13 +15,15 @@
     <th>Category</th>
     <th>Amount</th>
     <th>Date</th>
+    <th>Members</th>
     <tr>
     <% @expenses.each do |expense| %>
-      <% if expense.expense_user == session[:user_username] && expense.expense_group_id.to_i == @group.id.to_i %>
+      <% if (expense.expense_user != (session[:user_username])) && (expense.expense_group_id.to_i == @group.id.to_i) %>
         <td><%= link_to "#{expense.expense_name}", expense %></td>
         <td><%= expense.expense_category %></td>
         <td>&#x20B9;<%= expense.expense_amount %></td>
         <td><%= expense.expense_datetime.to_date %></td>
+        <td><%= expense.expense_user %></td>
         <% if ((expense.expense_datetime.to_date.month.to_i == Time.now.month.to_i) && (expense.expense_datetime.to_date.year.to_i == Time.now.year.to_i)) %>
           <% total = total + expense.expense_amount.to_f %>
           <% category_count[expense.expense_category] += 1 %>
@@ -34,14 +36,33 @@
       <% end %>
     <% end %>
   </table><br><br><br>
+</div>
 
-  <div>
-    <table border=1>
-      <tr><td><h2>&nbsp;Total Expense this month:</h2></td><td colspan=2><h2>&nbsp;&#x20B9;<%= total.round(2) %>&nbsp;</h2></td></tr>
-      <tr><td><h2>&nbsp;Most spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.max) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.max %>&nbsp;</h2></td></tr>
-      <tr><td><h2>&nbsp;Least spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.min) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.min %>&nbsp;</h2></td></tr>
-    </table>
-  </div>
+<div id="owes">
+  <table border=1, width=500>
+    <th>Name</th>
+    <th>Member</th>
+    <th>Amount</th>
+    <th>Owes</th>
+    <tr>
+    <% @group_expenses.each do |expense| %>
+      <% if (expense.group_id.to_i == @group.id.to_i) && (expense.username != session[:user_username]) && (Expense.find(expense.expense_id.to_i).paid_by != expense.username) %>
+        <td><%= expense.expense_name %></td>
+        <td><%= expense.username %></td>
+        <td>&#x20B9;<%= expense.shared_amount %></td>
+        <td><%= Expense.find(expense.expense_id.to_i).paid_by %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table><br><br><br>
+</div>
+
+<div>
+  <table border=1>
+    <tr><td><h2>&nbsp;Total Expense this month:</h2></td><td colspan=2><h2>&nbsp;&#x20B9;<%= total.round(2) %>&nbsp;</h2></td></tr>
+    <tr><td><h2>&nbsp;Most spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.max) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.max %>&nbsp;</h2></td></tr>
+    <tr><td><h2>&nbsp;Least spent on category:</h2></td><td><h2>&nbsp;<%= categories.key(categories.values.min) %>&nbsp;</h2></td><td><h2>&nbsp;&#x20B9;<%= categories.values.min %>&nbsp;</h2></td></tr>
+  </table>
 </div>
 <br><br>
 

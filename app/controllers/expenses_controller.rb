@@ -13,6 +13,7 @@ class ExpensesController < ApplicationController
   # GET /expenses/new
   def new
     @expense = Expense.new
+    @group_expense = GroupExpense.new
   end
 
   # GET /expenses/1/edit
@@ -25,6 +26,11 @@ class ExpensesController < ApplicationController
 
     respond_to do |format|
       if @expense.save
+        members_list = @expense.expense_user.strip.split(",")
+        members_list.each do |member|
+          @group_expense = GroupExpense.new(group_id: @expense.expense_group_id, group_name: Group.find(@expense.expense_group_id.to_i).group_name, expense_id: @expense.id, expense_name: @expense.expense_name, username: member.strip, shared_amount: (@expense.expense_amount.to_f/members_list.length.to_f))
+          @group_expense.save!
+        end
         format.html { redirect_to expense_url(@expense), notice: "Expense was successfully created." }
         format.json { render :show, status: :created, location: @expense }
       else
@@ -65,6 +71,6 @@ class ExpensesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expense_params
-      params.require(:expense).permit(:expense_name, :expense_category, :expense_amount, :expense_datetime, :expense_notes, :expense_user, :expense_group_id)
+      params.require(:expense).permit(:expense_name, :expense_category, :expense_amount, :expense_datetime, :expense_notes, :expense_user, :expense_group_id, :group_members, :paid_by)
     end
 end
