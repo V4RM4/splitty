@@ -39,6 +39,7 @@
 </div>
 
 <div id="owes">
+<% owed_tot_hash = Hash.new(0) %>
   <table border=1, width=500>
     <th>Name</th>
     <th>Member</th>
@@ -52,10 +53,17 @@
         <td>&#x20B9;<%= expense.shared_amount %></td>
         <td><%= Expense.find(expense.expense_id.to_i).paid_by %></td>
         </tr>
+        <% case Expense.find(expense.expense_id.to_i).paid_by %>
+        <% when Expense.find(expense.expense_id.to_i).paid_by %>
+          <% owed_tot_hash["#{Expense.find(expense.expense_id.to_i).paid_by}"] += expense.shared_amount %>
+        <% end %>
       <% end %>
     <% end %>
-  </table><br><br><br>
-</div>
+  </table><br><br>
+  <% owed_tot_hash.each do |name,owed| %>
+  <h2><%= "#{name} gets back " %> &#x20B9;<%= "#{owed.round(2)}" %></h2>
+  <% end %>
+</div><br>
 
 <div>
   <table border=1>
